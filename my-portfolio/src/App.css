@@ -25,7 +25,14 @@ body::before {
     pointer-events: none;
 
     background-color: #081b29;
-    background-image: var(--site-bg-mobile, var(--site-bg-desktop, none));
+    /* A scrim keeps content readable over the bright neon, fading darker
+       towards the bottom where the text sections start. */
+    background-image: linear-gradient(
+            rgba(8, 27, 41, 0.35),
+            rgba(8, 27, 41, 0.7) 55%,
+            rgba(8, 27, 41, 0.85)
+        ),
+        var(--site-bg-mobile, var(--site-bg-desktop, none));
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;

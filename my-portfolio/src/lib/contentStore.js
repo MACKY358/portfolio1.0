@@ -53,15 +53,35 @@ function writeJson(key, value) {
   }
 }
 
+// Image files that were optimised and renamed. Browsers that still hold the
+// old paths in localStorage would otherwise show a broken background or photo.
+const RENAMED_IMAGES = {
+  '/images/punk2.png': '/images/punk2.webp',
+  '/images/home-image-jo7t6d.jpg': '/images/home-image-jo7t6d.webp',
+}
+
+function migrateImagePaths(content) {
+  const fix = (value) => (typeof value === 'string' && RENAMED_IMAGES[value]) || value
+
+  return {
+    ...content,
+    site: content.site
+      ? { ...content.site, backgroundImage: fix(content.site.backgroundImage) }
+      : content.site,
+    home: content.home ? { ...content.home, image: fix(content.home.image) } : content.home,
+  }
+}
+
 /** The content currently published by the site (what visitors see). */
 export function loadPublished() {
   const stored = readJson(STORAGE_KEY)
-  return stored ? merge(defaultContent, stored) : defaultContent
+  return stored ? migrateImagePaths(merge(defaultContent, stored)) : defaultContent
 }
 
 /** Unsaved edits held in the admin panel. */
 export function loadDraft() {
-  return readJson(DRAFT_KEY)
+  const draft = readJson(DRAFT_KEY)
+  return draft ? migrateImagePaths(draft) : draft
 }
 
 export function saveDraft(content) {

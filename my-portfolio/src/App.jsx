@@ -16,6 +16,19 @@ import { isAuthenticated } from './lib/contentStore'
 const LOGIN_PATH = 'login'
 const MOBILE_BACKGROUND_QUERY = '(max-width: 768px)'
 
+/**
+ * Custom properties holding a url() are resolved against the stylesheet that
+ * consumes them, not against the page. Absolute URLs keep the background
+ * pointing at the real file.
+ */
+function toAbsoluteUrl(path) {
+  try {
+    return new URL(path, document.baseURI).href
+  } catch {
+    return path
+  }
+}
+
 function Portfolio() {
   const { content } = useContent()
 
@@ -31,7 +44,7 @@ function Portfolio() {
       return
     }
 
-    const desktop = assetUrl(path)
+    const desktop = toAbsoluteUrl(assetUrl(path))
     const desktopUrl = `url("${desktop}")`
     const query = window.matchMedia(MOBILE_BACKGROUND_QUERY)
 
