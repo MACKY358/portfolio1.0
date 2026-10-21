@@ -1,12 +1,22 @@
 {
   "site": {
-    "title": "Mike Trompeta | Portfolio",
+    "title": "Mike Aljhon Trompeta | Portfolio",
     "logo": "My Portfolio",
     "backgroundImage": "/images/punk2.png",
     "navLinks": [
-      { "label": "home", "href": "#home" },
-      { "label": "About", "href": "#about", "button": true },
-      { "label": "Contact", "href": "#contacts" }
+      {
+        "label": "home",
+        "href": "#home"
+      },
+      {
+        "label": "About",
+        "href": "#about",
+        "button": true
+      },
+      {
+        "label": "Contact",
+        "href": "#contacts"
+      }
     ]
   },
   "home": {
@@ -15,21 +25,42 @@
     "description": "I create beautiful, functional, and user-friendly digital experiences. Passionate about turning ideas into reality through clean code and innovative design.",
     "buttonText": "My Skills",
     "buttonHref": "#skills",
-    "image": "/images/Designer.png",
+    "image": "/images/image.png",
     "imageAlt": "Web design illustration"
   },
   "stats": [
-    { "value": "N/A", "label": "Years of Experience" },
-    { "value": "N/A", "label": "Completed Projects" },
-    { "value": "N/A", "label": "Satisfied Clients" }
+    {
+      "value": "N/A",
+      "label": "Years of Experience"
+    },
+    {
+      "value": "N/A",
+      "label": "Completed Projects"
+    },
+    {
+      "value": "N/A",
+      "label": "Satisfied Clients"
+    }
   ],
   "skills": {
     "heading": "My Skills",
     "items": [
-      { "name": "HTML", "description": "Web Structure" },
-      { "name": "CSS", "description": "Web Design" },
-      { "name": "JS", "description": "JavaScript" },
-      { "name": "React", "description": "Frontend" }
+      {
+        "name": "HTML",
+        "description": "Web Structure"
+      },
+      {
+        "name": "CSS",
+        "description": "Web Design"
+      },
+      {
+        "name": "JS",
+        "description": "JavaScript"
+      },
+      {
+        "name": "React",
+        "description": "Frontend"
+      }
     ]
   },
   "about": {
@@ -39,9 +70,18 @@
   "contact": {
     "heading": "Contact Me",
     "items": [
-      { "label": "Email", "value": "themail@gmail.com" },
-      { "label": "Phone", "value": "0912 345 6789" },
-      { "label": "github", "value": "github/snoopy09" }
+      {
+        "label": "Email",
+        "value": "themail@gmail.com"
+      },
+      {
+        "label": "Phone",
+        "value": "0912 345 6789"
+      },
+      {
+        "label": "github",
+        "value": "github/snoopy09"
+      }
     ]
   }
 }
