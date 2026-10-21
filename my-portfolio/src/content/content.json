@@ -1,0 +1,47 @@
+{
+  "site": {
+    "title": "Mike Trompeta | Portfolio",
+    "logo": "My Portfolio",
+    "backgroundImage": "/images/punk2.png",
+    "navLinks": [
+      { "label": "home", "href": "#home" },
+      { "label": "About", "href": "#about", "button": true },
+      { "label": "Contact", "href": "#contacts" }
+    ]
+  },
+  "home": {
+    "greeting": "Hello, I'm Mike Aljhon Trompeta",
+    "title": "Aspiring Web Developer",
+    "description": "I create beautiful, functional, and user-friendly digital experiences. Passionate about turning ideas into reality through clean code and innovative design.",
+    "buttonText": "My Skills",
+    "buttonHref": "#skills",
+    "image": "/images/Designer.png",
+    "imageAlt": "Web design illustration"
+  },
+  "stats": [
+    { "value": "N/A", "label": "Years of Experience" },
+    { "value": "N/A", "label": "Completed Projects" },
+    { "value": "N/A", "label": "Satisfied Clients" }
+  ],
+  "skills": {
+    "heading": "My Skills",
+    "items": [
+      { "name": "HTML", "description": "Web Structure" },
+      { "name": "CSS", "description": "Web Design" },
+      { "name": "JS", "description": "JavaScript" },
+      { "name": "React", "description": "Frontend" }
+    ]
+  },
+  "about": {
+    "heading": "About Me",
+    "body": "Hello! I'm Mike Aljhon Trompeta, an aspiring web developer who enjoys creating beautiful, functional, and user-friendly websites. I'm currently learning React JS, JavaScript, CSS, and MySQL to improve my skills and build useful applications."
+  },
+  "contact": {
+    "heading": "Contact Me",
+    "items": [
+      { "label": "Email", "value": "themail@gmail.com" },
+      { "label": "Phone", "value": "0912 345 6789" },
+      { "label": "github", "value": "github/snoopy09" }
+    ]
+  }
+}

@@ -437,6 +437,34 @@ header {
     line-height: 1.4;
 }
 
+/* FOOTER */
+.site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    padding: 25px 8%;
+    color: #94a3b8;
+    font-size: 15px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.site-footer .admin-link {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.site-footer .admin-link:hover {
+    color: #00eaff;
+    opacity: 1;
+}
+
 /* MOBILE RESPONSIVE */
 @media (max-width: 768px) {
     header {
