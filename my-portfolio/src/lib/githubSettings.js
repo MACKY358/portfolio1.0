@@ -1,8 +1,8 @@
 const GITHUB_KEY = 'portfolio-github-v1'
 
 const DEFAULTS = {
-  owner: 'snoopy0979',
-  repo: 'portfolio',
+  owner: 'MACKY358',
+  repo: 'portfolio1.0',
   branch: 'main',
   contentPath: 'my-portfolio/src/content/content.json',
   imagesPath: 'my-portfolio/public/images',
