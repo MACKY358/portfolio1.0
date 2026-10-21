@@ -8,8 +8,12 @@ import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Admin from './components/Admin'
+import Login from './components/Login'
 import { useContent } from './context/useContent'
 import { assetUrl } from './lib/assets'
+import { isAuthenticated } from './lib/contentStore'
+
+const LOGIN_PATH = 'login'
 
 function Portfolio() {
   const { content } = useContent()
@@ -37,6 +41,7 @@ function Portfolio() {
 function App() {
   const { content } = useContent()
   const adminPath = content.site.adminPath || 'admin'
+  const [authed, setAuthed] = useState(() => isAuthenticated())
 
   const [route, setRoute] = useState(() => {
     if (window.location.pathname.replace(/\/+$/, '') === '/admin') return 'admin'
@@ -59,20 +64,49 @@ function App() {
     }
   }, [])
 
+  // The admin panel is only reachable after signing in. Anyone who opens the
+  // admin address directly is sent to the sign-in page first.
+  const wantsAdmin = route === adminPath || route === 'admin'
+  const authenticated = authed && isAuthenticated()
+  const currentRoute = wantsAdmin && !authenticated ? LOGIN_PATH : route
+
+  useEffect(() => {
+    if (wantsAdmin && !authenticated) {
+      window.location.hash = `#${LOGIN_PATH}`
+    }
+  }, [wantsAdmin, authenticated])
+
   // Ctrl+Shift+A opens the admin panel without leaving a visible link.
   useEffect(() => {
     const onKeyDown = (event) => {
       if (!event.ctrlKey || !event.shiftKey) return
       if (event.key.toLowerCase() !== 'a') return
       event.preventDefault()
-      window.location.hash = `#${adminPath}`
+      window.location.hash = `#${isAuthenticated() ? adminPath : LOGIN_PATH}`
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [adminPath])
 
-  if (route === adminPath || route === 'admin') {
-    return <Admin />
+  const signIn = () => {
+    setAuthed(true)
+    window.location.hash = `#${adminPath}`
+    setRoute(adminPath)
+  }
+
+  const signOut = () => {
+    setAuthed(false)
+    window.location.hash = `#${LOGIN_PATH}`
+    setRoute(LOGIN_PATH)
+  }
+
+  if (currentRoute === LOGIN_PATH) {
+    return <Login onLogin={signIn} redirectTo={adminPath} />
+  }
+
+  if (wantsAdmin) {
+    if (!authenticated) return null
+    return <Admin onSignOut={signOut} />
   }
 
   return <Portfolio />

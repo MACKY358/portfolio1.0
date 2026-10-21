@@ -3,10 +3,8 @@ import '../admin.css'
 import { useContent } from '../context/useContent'
 import ImageField from './ImageField'
 import {
-  authenticate,
   changePassword,
   exportContent,
-  getPasswordHint,
   importContent,
   isAuthenticated,
   logout,
@@ -160,49 +158,6 @@ function ListEditor({ items, onChange, makeItem, primaryKey, secondaryKey, prima
   )
 }
 
-// --- login gate -----------------------------------------------------------
-
-function Login({ onLogin }) {
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-
-  const submit = (event) => {
-    event.preventDefault()
-    if (authenticate(password)) {
-      onLogin()
-    } else {
-      setError('Wrong password')
-    }
-  }
-
-  return (
-    <div className="adm-login">
-      <form className="adm-login-card" onSubmit={submit}>
-        <h1>Admin</h1>
-        <p className="adm-hint">{getPasswordHint()}</p>
-
-        <input
-          type="password"
-          className="adm-input"
-          placeholder="Password"
-          autoFocus
-          value={password}
-          onChange={(event) => {
-            setPassword(event.target.value)
-            setError('')
-          }}
-        />
-
-        {error ? <p className="adm-error">{error}</p> : null}
-
-        <button type="submit" className="adm-primary">
-          Sign in
-        </button>
-      </form>
-    </div>
-  )
-}
-
 // --- live preview ---------------------------------------------------------
 
 const PREVIEW_WIDTH = 1280
@@ -260,7 +215,7 @@ function LivePreview({ content }) {
 
 // --- main admin ------------------------------------------------------------
 
-function AdminPanel() {
+function AdminPanel({ onSignOut }) {
   const { content, replaceContent, update, updateList, dirty, publish, discardDraft, resetAll, reloadDraft } =
     useContent()
   const [tab, setTab] = useState('site')
@@ -830,7 +785,14 @@ function AdminPanel() {
           <button type="button" className="adm-secondary adm-danger-outline" onClick={handleReset}>
             Reset
           </button>
-          <button type="button" className="adm-secondary" onClick={logout}>
+          <button
+            type="button"
+            className="adm-secondary"
+            onClick={() => {
+              logout()
+              if (onSignOut) onSignOut()
+            }}
+          >
             Sign out
           </button>
         </div>
@@ -862,12 +824,11 @@ function AdminPanel() {
   )
 }
 
-export default function Admin() {
-  const [authed, setAuthed] = useState(() => isAuthenticated())
+export default function Admin({ onSignOut }) {
+  // The admin panel only ever renders once the user has signed in. The
+  // routing layer in App.jsx sends unauthenticated visitors to the sign-in
+  // page first, so this is a safety net rather than the main gate.
+  if (!isAuthenticated()) return null
 
-  if (!authed) {
-    return <Login onLogin={() => setAuthed(true)} />
-  }
-
-  return <AdminPanel />
+  return <AdminPanel onSignOut={onSignOut} />
 }

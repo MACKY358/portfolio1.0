@@ -15,10 +15,22 @@ npm run lint     # run oxlint
 
 ## The admin page
 
-Open **http://localhost:5173/#admin** (or click the "Admin" link in the footer).
+Open **http://localhost:5173/#login** to sign in. After signing in you land on the admin panel
+at `#admin`.
 
 - **Default password:** `admin`
 - Change it under the **Settings** tab. It is stored in your browser's localStorage.
+
+### Signing in
+
+The admin panel is never shown before you sign in. If you open the admin address directly
+without being signed in, you are sent to the sign-in page first.
+
+The sign-in lasts for the browser session, so you are asked for the password again the next
+time you open a new browser session. Tick **Keep me signed in on this device** if you would
+rather stay signed in.
+
+**Sign out** in the admin header clears the sign-in and returns you to the sign-in page.
 
 ### Hiding the admin page
 

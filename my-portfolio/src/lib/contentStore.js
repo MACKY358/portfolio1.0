@@ -94,19 +94,28 @@ export function hasDraft() {
 // --- Admin password -------------------------------------------------------
 // This gates the admin UI only. It is not real server-side security; anyone
 // with devtools can read localStorage. Treat it as a convenience lock.
+//
+// The sign-in is kept in sessionStorage by default, so the admin panel asks
+// for the password again on each new browser session. Choosing "keep me
+// signed in" also stores the flag in localStorage.
 
 export function isAuthenticated() {
-  return window.localStorage.getItem(AUTH_KEY) === 'true'
+  return (
+    window.sessionStorage.getItem(AUTH_KEY) === 'true' ||
+    window.localStorage.getItem(AUTH_KEY) === 'true'
+  )
 }
 
-export function authenticate(password) {
+export function authenticate(password, remember = false) {
   const stored = window.localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD
   if (password !== stored) return false
-  window.localStorage.setItem(AUTH_KEY, 'true')
+  window.sessionStorage.setItem(AUTH_KEY, 'true')
+  if (remember) window.localStorage.setItem(AUTH_KEY, 'true')
   return true
 }
 
 export function logout() {
+  window.sessionStorage.removeItem(AUTH_KEY)
   window.localStorage.removeItem(AUTH_KEY)
 }
 
