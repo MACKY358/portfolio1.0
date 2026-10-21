@@ -9,6 +9,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Admin from './components/Admin'
 import { useContent } from './context/useContent'
+import { assetUrl } from './lib/assets'
 
 function Portfolio() {
   const { content } = useContent()
@@ -16,7 +17,7 @@ function Portfolio() {
   useEffect(() => {
     document.title = content.site.title
     document.body.style.backgroundImage = content.site.backgroundImage
-      ? `url("${content.site.backgroundImage}")`
+      ? `url("${assetUrl(content.site.backgroundImage)}")`
       : ''
   }, [content.site.title, content.site.backgroundImage])
 

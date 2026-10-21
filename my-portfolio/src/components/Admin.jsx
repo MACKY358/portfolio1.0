@@ -31,6 +31,7 @@ import {
   loadGithubSettings,
   saveGithubSettings,
 } from '../lib/githubSettings'
+import { assetUrl } from '../lib/assets'
 import Navbar from './Navbar'
 import Home from './Home'
 import Experiences from './Experiences'
@@ -223,7 +224,7 @@ function LivePreview({ content }) {
             width: PREVIEW_WIDTH,
             zoom: scale,
             backgroundImage: content.site.backgroundImage
-              ? `url("${content.site.backgroundImage}")`
+              ? `url("${assetUrl(content.site.backgroundImage)}")`
               : undefined,
             backgroundSize: 'cover',
             backgroundPosition: 'center',

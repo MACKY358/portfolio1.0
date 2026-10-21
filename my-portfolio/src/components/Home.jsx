@@ -1,4 +1,5 @@
 import { useContent } from '../context/useContent'
+import { assetUrl } from '../lib/assets'
 
 function Home() {
   const { content } = useContent()
@@ -20,7 +21,7 @@ function Home() {
       </div>
 
       <div className="home-image">
-        {home.image ? <img src={home.image} alt={home.imageAlt} /> : null}
+        {home.image ? <img src={assetUrl(home.image)} alt={home.imageAlt} /> : null}
       </div>
     </section>
   )

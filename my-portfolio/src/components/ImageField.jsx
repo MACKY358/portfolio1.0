@@ -6,6 +6,7 @@ import {
   isDataUrl,
   isImageFile,
 } from '../lib/imageStore'
+import { assetUrl } from '../lib/assets'
 
 /**
  * An image field for the admin panel.
@@ -57,7 +58,7 @@ function ImageField({ label, value, onChange, hint, repoImages = [], onUpload })
       <div className="adm-image">
         <div className="adm-image-preview">
           {previewSrc ? (
-            <img src={previewSrc} alt="Preview" />
+            <img src={assetUrl(previewSrc)} alt="Preview" />
           ) : (
             <span className="adm-image-empty">No image</span>
           )}
