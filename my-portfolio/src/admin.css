@@ -235,6 +235,17 @@ body.admin-active {
     margin: 8px 0;
 }
 
+.adm-warning {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 8px 0 16px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(250, 204, 21, 0.4);
+    background: rgba(250, 204, 21, 0.12);
+    color: #fde68a;
+}
+
 .adm-input {
     width: 100%;
     padding: 10px 12px;
@@ -618,7 +629,7 @@ body.admin-active {
     justify-content: center;
 
     background: #081b29;
-    background-image: url("/images/punk2.png");
+    background-image: url("/images/punk2.webp");
     background-size: cover;
     background-position: center;
 

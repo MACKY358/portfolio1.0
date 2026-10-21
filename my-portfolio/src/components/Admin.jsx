@@ -7,6 +7,7 @@ import {
   exportContent,
   importContent,
   isAuthenticated,
+  isUsingDefaultPassword,
   loadRemoteBase,
   logout,
   saveRemoteBase,
@@ -288,6 +289,10 @@ function AdminPanel({ onSignOut }) {
   const [passwordMessage, setPasswordMessage] = useState('')
 
   const handleChangePassword = () => {
+    if (newPassword.length < 8) {
+      setPasswordMessage('Use at least 8 characters.')
+      return
+    }
     if (changePassword(currentPassword, newPassword)) {
       setPasswordMessage('Password updated.')
       setCurrentPassword('')
@@ -511,7 +516,7 @@ function AdminPanel({ onSignOut }) {
               label="Background image"
               value={site.backgroundImage}
               onChange={(value) => update(['site', 'backgroundImage'], value)}
-              hint="Upload a photo, pick one from the library, or type a path like /images/punk2.png"
+              hint="Upload a photo, pick one from the library, or type a path like /images/punk2.webp"
               repoImages={repoImages}
             />
 
@@ -676,6 +681,12 @@ function AdminPanel({ onSignOut }) {
             <h2 className="adm-title">Settings</h2>
 
             <h3 className="adm-subtitle">Change password</h3>
+            {isUsingDefaultPassword() ? (
+              <p className="adm-warning">
+                This panel still uses the built-in default password. Set a real one before you
+                share the site — anyone who guesses it can edit your content.
+              </p>
+            ) : null}
             <Field label="Current password">
               <Text
                 value={currentPassword}

@@ -1,8 +1,10 @@
 const GITHUB_KEY = 'portfolio-github-v1'
 
 const DEFAULTS = {
-  owner: 'MACKY358',
-  repo: 'portfolio1.0',
+  // No repository is baked in: each deployment edits its own repository, and a
+  // stale default here would push content to somebody else's project.
+  owner: '',
+  repo: '',
   branch: 'main',
   contentPath: 'my-portfolio/src/content/content.json',
   imagesPath: 'my-portfolio/public/images',

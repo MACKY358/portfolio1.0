@@ -1,13 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
 import App from './App.jsx'
 import { ContentProvider } from './context/ContentContext.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ContentProvider>
-      <App />
-    </ContentProvider>
+    <ErrorBoundary>
+      <ContentProvider>
+        <App />
+      </ContentProvider>
+    </ErrorBoundary>
   </StrictMode>,
 )

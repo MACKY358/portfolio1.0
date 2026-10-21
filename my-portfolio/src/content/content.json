@@ -2,7 +2,7 @@
   "site": {
     "title": "Mike Aljhon Trompeta | Portfolio",
     "logo": "My Portfolio",
-    "backgroundImage": "/images/punk2.png",
+    "backgroundImage": "/images/punk2.webp",
     "showFooter": true,
     "showAdminLink": false,
     "adminPath": "admin",
@@ -28,7 +28,7 @@
     "description": "I create beautiful, functional, and user-friendly digital experiences. Passionate about turning ideas into reality through clean code and innovative design.",
     "buttonText": "My Skills",
     "buttonHref": "#skills",
-    "image": "/images/home-image-jo7t6d.jpg",
+    "image": "/images/home-image-jo7t6d.webp",
     "imageAlt": "Web design illustration"
   },
   "stats": [

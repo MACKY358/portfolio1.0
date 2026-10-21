@@ -155,6 +155,11 @@ export function getPasswordHint() {
   return window.localStorage.getItem(PASSWORD_KEY) ? 'Custom password set' : `Default password: ${DEFAULT_PASSWORD}`
 }
 
+/** True while the admin still uses the built-in default password. */
+export function isUsingDefaultPassword() {
+  return (window.localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD) === DEFAULT_PASSWORD
+}
+
 // --- Import / export ------------------------------------------------------
 
 export function exportContent(content) {

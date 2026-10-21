@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { authenticate, getPasswordHint } from '../lib/contentStore'
+import { authenticate } from '../lib/contentStore'
 
 /**
  * The sign-in screen.
@@ -27,7 +27,6 @@ function Login({ onLogin, redirectTo }) {
     <div className="adm-login">
       <form className="adm-login-card" onSubmit={submit}>
         <h1>Sign in</h1>
-        <p className="adm-hint">{getPasswordHint()}</p>
 
         <input
           type="password"
