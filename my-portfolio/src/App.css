@@ -8,14 +8,34 @@
 
 body {
     min-height: 100vh;
-    /* The background image comes from content.site.backgroundImage and is set
-       from App.jsx so it resolves against the Vite base. */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
     background-color: #081b29;
     font-family: Arial, sans-serif;
+}
+
+/* The background image sits on a fixed layer instead of on body.
+   body is as tall as the whole page, so cover-scaling there zoomed the image
+   into a narrow strip on phones - and iOS ignores background-attachment: fixed
+   on body. App.jsx supplies --site-bg-desktop, plus --site-bg-mobile when a
+   portrait crop exists; a missing crop falls through to the desktop image. */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background-color: #081b29;
+    background-image: var(--site-bg-mobile, var(--site-bg-desktop, none));
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 769px) {
+    body::before {
+        background-image: var(--site-bg-desktop, none);
+        background-position: center;
+    }
 }
 
 /* NAVBAR */

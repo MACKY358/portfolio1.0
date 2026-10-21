@@ -81,3 +81,9 @@ there. The site is served from a subpath, which is why `vite.config.js` uses
 Reference images as `/images/name.webp`; paths are resolved through
 `src/lib/assets.js` so they respect the Vite base. Prefer WebP and resize before
 committing: the page background is currently 147 KB and the hero image 116 KB.
+
+The background image is drawn on a fixed `body::before` layer so it covers the
+viewport rather than being stretched over the full page height. On screens up
+to 768px the app looks for a portrait crop with a `-mobile` suffix next to the
+configured image (`punk2.webp` → `punk2-mobile.webp`) and only downloads that
+file; without a crop it falls back to the landscape image.

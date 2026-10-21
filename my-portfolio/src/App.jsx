@@ -14,15 +14,79 @@ import { assetUrl } from './lib/assets'
 import { isAuthenticated } from './lib/contentStore'
 
 const LOGIN_PATH = 'login'
+const MOBILE_BACKGROUND_QUERY = '(max-width: 768px)'
 
 function Portfolio() {
   const { content } = useContent()
 
   useEffect(() => {
     document.title = content.site.title
-    document.body.style.backgroundImage = content.site.backgroundImage
-      ? `url("${assetUrl(content.site.backgroundImage)}")`
-      : ''
+
+    const root = document.documentElement
+    const path = content.site.backgroundImage
+
+    if (!path) {
+      root.style.removeProperty('--site-bg-desktop')
+      root.style.removeProperty('--site-bg-mobile')
+      return
+    }
+
+    const desktop = assetUrl(path)
+    const desktopUrl = `url("${desktop}")`
+    const query = window.matchMedia(MOBILE_BACKGROUND_QUERY)
+
+    const showDesktop = () => {
+      root.style.setProperty('--site-bg-desktop', desktopUrl)
+      root.style.removeProperty('--site-bg-mobile')
+    }
+
+    // Uploaded images are data URLs and have no sibling crop.
+    if (/^data:/i.test(desktop)) {
+      showDesktop()
+      return
+    }
+
+    // Phones get a portrait crop (punk2.webp -> punk2-mobile.webp) so the
+    // landscape image is not zoomed into a strip. It is only requested on
+    // small screens, and a missing crop falls back to the desktop image, so
+    // images added through the admin keep working.
+    const mobile = desktop.replace(/(\.[a-z0-9]+)$/i, '-mobile$1')
+    let probe = null
+    let cropReady = false
+    let cancelled = false
+
+    const showCrop = () => {
+      if (cropReady) {
+        root.style.setProperty('--site-bg-mobile', `url("${mobile}")`)
+        root.style.removeProperty('--site-bg-desktop')
+        return
+      }
+      if (probe || cancelled) return
+
+      probe = new Image()
+      probe.onload = () => {
+        if (cancelled) return
+        cropReady = true
+        root.style.setProperty('--site-bg-mobile', `url("${mobile}")`)
+        root.style.removeProperty('--site-bg-desktop')
+      }
+      probe.onerror = () => {
+        if (!cancelled) showDesktop()
+      }
+      probe.src = mobile
+    }
+
+    const sync = () => {
+      if (query.matches) showCrop()
+      else showDesktop()
+    }
+
+    sync()
+    query.addEventListener('change', sync)
+    return () => {
+      cancelled = true
+      query.removeEventListener('change', sync)
+    }
   }, [content.site.title, content.site.backgroundImage])
 
   return (
