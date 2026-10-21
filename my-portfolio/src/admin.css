@@ -261,6 +261,35 @@ body.admin-active {
     line-height: 1.6;
 }
 
+/* TOGGLE */
+.adm-toggle {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.adm-toggle input {
+    width: 18px;
+    height: 18px;
+    margin: 2px 0 0;
+    accent-color: #00eaff;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.adm-toggle strong {
+    display: block;
+    font-size: 15px;
+    font-weight: normal;
+    color: #f1f5f9;
+}
+
+.adm-toggle .adm-hint {
+    margin-top: 2px;
+}
+
 /* IMAGE FIELD */
 .adm-image {
     display: flex;

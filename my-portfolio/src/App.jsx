@@ -35,6 +35,9 @@ function Portfolio() {
 }
 
 function App() {
+  const { content } = useContent()
+  const adminPath = content.site.adminPath || 'admin'
+
   const [route, setRoute] = useState(() => {
     if (window.location.pathname.replace(/\/+$/, '') === '/admin') return 'admin'
     return window.location.hash.replace(/^#\/?/, '')
@@ -56,7 +59,19 @@ function App() {
     }
   }, [])
 
-  if (route === 'admin') {
+  // Ctrl+Shift+A opens the admin panel without leaving a visible link.
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (!event.ctrlKey || !event.shiftKey) return
+      if (event.key.toLowerCase() !== 'a') return
+      event.preventDefault()
+      window.location.hash = `#${adminPath}`
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [adminPath])
+
+  if (route === adminPath || route === 'admin') {
     return <Admin />
   }
 

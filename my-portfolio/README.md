@@ -20,6 +20,28 @@ Open **http://localhost:5173/#admin** (or click the "Admin" link in the footer).
 - **Default password:** `admin`
 - Change it under the **Settings** tab. It is stored in your browser's localStorage.
 
+### Hiding the admin page
+
+Visitors should not see a link to your admin page. By default there is none — the footer
+shows only the copyright line, and the page HTML contains no reference to the admin route.
+
+Three things control this, all under **Site → Visibility**:
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| **Show footer** | on | Shows the copyright bar at the bottom |
+| **Show admin link in footer** | **off** | Adds a small "Admin" link to the footer |
+| **Admin page address** | `admin` | The hash that opens the admin page |
+
+Change the address to something only you know, such as `manage-2026`, and your admin page
+moves to `yoursite.com/#manage-2026`. The old address stops working.
+
+You can also open the admin panel from any page by pressing **Ctrl+Shift+A**, so you never
+need to remember the address.
+
+> The admin page is hidden from view, not secured. Anyone who guesses the address still
+> reaches the login screen, which is why the password matters.
+
 ### What you can edit
 
 | Tab | Contents |

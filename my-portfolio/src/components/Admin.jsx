@@ -84,6 +84,22 @@ function TextArea({ value, onChange, rows = 4 }) {
   )
 }
 
+function Toggle({ label, checked, onChange, hint }) {
+  return (
+    <label className="adm-toggle">
+      <input
+        type="checkbox"
+        checked={Boolean(checked)}
+        onChange={(event) => onChange(event.target.checked)}
+      />
+      <span>
+        <strong>{label}</strong>
+        {hint ? <span className="adm-hint">{hint}</span> : null}
+      </span>
+    </label>
+  )
+}
+
 function ListEditor({ items, onChange, makeItem, primaryKey, secondaryKey, primaryLabel, secondaryLabel }) {
   const updateItem = (index, key, value) => {
     const next = items.map((item, i) => (i === index ? { ...item, [key]: value } : item))
@@ -505,6 +521,32 @@ function AdminPanel() {
                 secondaryLabel="Link target (e.g. #about)"
                 makeItem={() => ({ label: 'New link', href: '#home' })}
                 onChange={(next) => update(['site', 'navLinks'], next)}
+              />
+            </Field>
+
+            <h3 className="adm-subtitle">Visibility</h3>
+
+            <Toggle
+              label="Show footer"
+              checked={site.showFooter !== false}
+              onChange={(value) => update(['site', 'showFooter'], value)}
+              hint="The copyright bar at the bottom of the page"
+            />
+
+            <Toggle
+              label="Show admin link in footer"
+              checked={Boolean(site.showAdminLink)}
+              onChange={(value) => update(['site', 'showAdminLink'], value)}
+              hint="Off by default so visitors never see a link to the admin page"
+            />
+
+            <Field
+              label="Admin page address"
+              hint={`Your admin page is at yoursite.com/#${site.adminPath || 'admin'}. Change this to make it harder to find. You can always press Ctrl+Shift+A to open it.`}
+            >
+              <Text
+                value={site.adminPath || 'admin'}
+                onChange={(value) => update(['site', 'adminPath'], value.replace(/^#/, ''))}
               />
             </Field>
           </>

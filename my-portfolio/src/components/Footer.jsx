@@ -5,15 +5,20 @@ const YEAR = new Date().getFullYear()
 
 function Footer() {
   const { content } = useContent()
+  const { showFooter = true, showAdminLink = false, adminPath = 'admin' } = content.site
+
+  if (!showFooter) return null
 
   return (
     <footer className="site-footer">
       <p>
         &copy; {YEAR} {content.site.logo}
       </p>
-      <a href="#admin" className="admin-link">
-        Admin
-      </a>
+      {showAdminLink ? (
+        <a href={`#${adminPath}`} className="admin-link">
+          Admin
+        </a>
+      ) : null}
     </footer>
   )
 }
