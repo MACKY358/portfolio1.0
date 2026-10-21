@@ -7,7 +7,9 @@ import {
   exportContent,
   importContent,
   isAuthenticated,
+  loadRemoteBase,
   logout,
+  saveRemoteBase,
 } from '../lib/contentStore'
 import {
   buildImageName,
@@ -357,11 +359,51 @@ function AdminPanel({ onSignOut }) {
     }
 
     setSyncing(true)
-    setGithubStatus('Uploading images...')
+    setGithubStatus('Checking the repository for newer changes...')
 
     let uploadedCount = 0
 
     try {
+      // Guard against overwriting changes that were made in the repository
+      // since this editor last synced. Without this check a stale browser tab
+      // can silently roll the repository back.
+      const remoteRaw = await getFileContent(
+        github.owner,
+        github.repo,
+        github.contentPath,
+        github.branch,
+        github.token,
+      )
+
+      if (remoteRaw) {
+        let remoteContent
+        try {
+          remoteContent = JSON.parse(remoteRaw)
+        } catch {
+          remoteContent = null
+        }
+
+        const base = loadRemoteBase()
+
+        if (remoteContent && base && JSON.stringify(remoteContent) !== JSON.stringify(base)) {
+          setGithubStatus(
+            'The repository has changes that are not in this editor. Pull from GitHub first, then push again.',
+          )
+          flash('Repository has newer changes. Pull first.')
+          return
+        }
+
+        if (remoteContent && !base) {
+          setGithubStatus(
+            'This editor has not synced with the repository yet. Pull from GitHub first to be safe.',
+          )
+          flash('Pull from GitHub first.')
+          return
+        }
+      }
+
+      setGithubStatus('Uploading images...')
+
       const embedded = findDataUrlFields(content)
       let nextContent = content
 
@@ -399,6 +441,10 @@ function AdminPanel({ onSignOut }) {
       // live site agree from now on.
       replaceContent(nextContent)
 
+      // Remember what the repository now holds, so the next push can tell
+      // whether the repository moved ahead in the meantime.
+      saveRemoteBase(nextContent)
+
       setGithubStatus(`Synced to ${github.owner}/${github.repo}.`)
       flash('Pushed to GitHub.')
     } catch (error) {
@@ -430,7 +476,9 @@ function AdminPanel({ onSignOut }) {
         setGithubStatus('No content.json found in the repository.')
         return
       }
-      replaceContent(JSON.parse(raw))
+      const parsed = JSON.parse(raw)
+      replaceContent(parsed)
+      saveRemoteBase(parsed)
       setGithubStatus('Pulled content.json from GitHub.')
     } catch (error) {
       setGithubStatus(`Pull failed: ${error.message}`)

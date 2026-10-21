@@ -99,6 +99,20 @@ files instead of huge inline base64. Your next deploy publishes the change.
 **Pull from GitHub** does the reverse: it loads the repository's `content.json` into
 the editor.
 
+### Protecting the repository from stale pushes
+
+The editor remembers the `content.json` it last read from or wrote to the repository. If
+the repository has moved on since then — for example because you edited the site in another
+browser, or someone changed the file directly — the push stops and tells you to pull first
+instead of overwriting their work.
+
+If you see **"Repository has newer changes. Pull first."**, click **Pull from GitHub**, then
+push again.
+
+> The admin panel commits `content.json` and images. Code changes still go through git, so
+> a `git push` of new code and an admin push of new content can collide. If a push is
+> rejected because the repository moved ahead, pull and merge before pushing again.
+
 ### How edits are saved
 
 1. **Editing** updates the live preview on the right and saves an *unsaved draft* automatically.

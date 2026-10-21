@@ -4,6 +4,7 @@ const STORAGE_KEY = 'portfolio-content-v1'
 const DRAFT_KEY = 'portfolio-draft-v1'
 const AUTH_KEY = 'portfolio-auth-v1'
 const PASSWORD_KEY = 'portfolio-password-v1'
+const REMOTE_BASE_KEY = 'portfolio-remote-base-v1'
 
 export const DEFAULT_PASSWORD = 'admin'
 
@@ -79,6 +80,7 @@ export function publish(content) {
 export function resetPublished() {
   window.localStorage.removeItem(STORAGE_KEY)
   window.localStorage.removeItem(DRAFT_KEY)
+  window.localStorage.removeItem(REMOTE_BASE_KEY)
   return defaultContent
 }
 
@@ -89,6 +91,29 @@ export function isPublishedModified() {
 
 export function hasDraft() {
   return window.localStorage.getItem(DRAFT_KEY) !== null
+}
+
+// --- Last synced repository content ---------------------------------------
+// The admin panel keeps a copy of the content.json it last read from or
+// wrote to the repository. Before pushing it compares the repository against
+// this copy, so a push can never silently overwrite changes that were made
+// somewhere else.
+
+export function saveRemoteBase(content) {
+  try {
+    window.localStorage.setItem(REMOTE_BASE_KEY, JSON.stringify(content))
+    return true
+  } catch {
+    return false
+  }
+}
+
+export function loadRemoteBase() {
+  return readJson(REMOTE_BASE_KEY)
+}
+
+export function clearRemoteBase() {
+  window.localStorage.removeItem(REMOTE_BASE_KEY)
 }
 
 // --- Admin password -------------------------------------------------------

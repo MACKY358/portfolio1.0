@@ -3,6 +3,9 @@
     "title": "Mike Aljhon Trompeta | Portfolio",
     "logo": "My Portfolio",
     "backgroundImage": "/images/punk2.png",
+    "showFooter": true,
+    "showAdminLink": false,
+    "adminPath": "admin",
     "navLinks": [
       {
         "label": "home",
