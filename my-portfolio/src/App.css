@@ -533,7 +533,42 @@ header {
 
      .contact_box {
         width: 100%;
-        max-width: 350px;
+        max-width: 100%;
+        height: auto;
+        padding: 14px 16px;
+        margin: 0;
+        border-radius: 12px;
+    }
+
+    /* Contact: compact rows like the stat cards */
+    .contacts {
+        min-height: 0;
+        margin-top: 40px;
+    }
+
+    .contacts > div {
+        width: 100%;
+    }
+
+    .contacts h2 {
+        margin-top: 0;
+        font-size: 28px;
+    }
+
+    .contact-box {
+        gap: 12px;
+        padding: 0 5%;
+        margin: 16px auto 32px;
+    }
+
+    .contact_box h3 {
+        font-size: 20px;
+        margin-top: 0;
+    }
+
+    .contact_box p {
+        font-size: 13px;
+        margin-top: 4px;
     }
 
     /* Skills: two small cards per row */
