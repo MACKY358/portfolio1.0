@@ -504,21 +504,79 @@ header {
         height: 220px;
     }
 
+    /* Experience stats: compact cards instead of tall panels */
     .experiences {
-        gap: 15px;
+        gap: 12px;
+        padding: 0 5%;
+        margin: 16px auto 32px;
+        font-size: 16px;
     }
 
     .box {
         width: 100%;
-        max-width: 350px;
+        max-width: 100%;
+        height: auto;
+        padding: 14px 16px;
+        margin: 0;
+        border-radius: 12px;
     }
+
+    .box h3 {
+        font-size: 22px;
+        margin-top: 0;
+    }
+
+    .box p {
+        font-size: 13px;
+        margin-top: 4px;
+    }
+
      .contact_box {
         width: 100%;
         max-width: 350px;
     }
-     .skill_box {
+
+    /* Skills: two small cards per row */
+    .skills-box {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
         width: 100%;
-        max-width: 350px;
+        padding: 0 5%;
+        margin: 16px auto 32px;
+    }
+
+    .skill_box {
+        width: 100%;
+        max-width: none;
+        height: 104px;
+        margin: 0;
+        padding: 12px 10px;
+        border-radius: 12px;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .skill_box h3 {
+        font-size: 19px;
+        margin-top: 0;
+    }
+
+    .skill_box p {
+        font-size: 12px;
+        margin-top: 2px;
+    }
+
+    /* Close the empty space that used to separate the two sections */
+    .skill {
+        min-height: 0;
+        margin-top: 0;
+        padding-top: 10px;
+    }
+
+    .skill h2 {
+        margin-top: 30px;
+        font-size: 28px;
     }
      .about {
         padding: 150px 5% 50px;
